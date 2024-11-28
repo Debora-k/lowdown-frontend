@@ -85,6 +85,13 @@ export const logout = createAsyncThunk(
   }
 );
 
+export const forgotPassword = createAsyncThunk(
+  'auth/forgotPassword',
+  async ({ email }, { dispatch, rejectWithValue }) => {}
+);
+
+export const resetPassword = createAsyncThunk('auth/resetPassword');
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {

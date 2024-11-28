@@ -192,7 +192,7 @@ function CommentUser({ articleId, user, isFromFavorite, eventObj }) {
             >
               <RobotIcon />{' '}
               {suggestedComment
-                ? 'Tap here to use the suggestion!'
+                ? 'Click here to use the suggestion!'
                 : 'Do you want to get a suggested comment from me?'}
             </button>
           )}

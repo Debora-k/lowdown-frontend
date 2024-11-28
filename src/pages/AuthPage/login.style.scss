@@ -99,6 +99,16 @@
     }
   }
 
+  &__btn-forgotpassword {
+    color: #fff;
+    background-color: var(--clr-accent);
+    border: 1px solidvar(--clr-accent);
+    &:hover {
+      background-color: var(--clr-highlight);
+      border: 1px solid var(--clr-highlight);
+    }
+  }
+
   &__error {
     color: red;
     font-size: 0.9em;

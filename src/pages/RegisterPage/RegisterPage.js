@@ -9,7 +9,7 @@ const RegisterPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false); // sign-up 버튼 disable
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { user, loading } = useSelector((store) => store.user);
 
@@ -20,7 +20,6 @@ const RegisterPage = () => {
     }
   }, [user, navigate]);
 
-  // 폼 유효성 체크
   function checkFormValid({ password, confirm, policy }) {
     if (!policy) {
       setError('You must agree to the Terms and Conditions');
@@ -48,7 +47,6 @@ const RegisterPage = () => {
     };
 
     const valid = checkFormValid(obj);
-    // 이상 발견시 진행하지 않고 종료
     if (!valid) return;
 
     setError('');
@@ -125,7 +123,7 @@ const RegisterPage = () => {
             Terms and Conditions
           </label>
 
-          {/* 회원가입 실패시 */}
+          {/* When a user failed to register */}
           {error && <div className="register__error">{error}</div>}
 
           <button className="register__button" type="submit">
