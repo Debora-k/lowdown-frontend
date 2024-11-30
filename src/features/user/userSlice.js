@@ -3,14 +3,6 @@ import api from '../../utils/api';
 import { clearArticle } from '../article/articleSlice';
 import { clearFavorite } from '../favorite/favoriteSlice';
 
-// 필요한 API들
-// 1. signup      done
-// 2. loginWithEmail done
-// 3. loginWithToken done
-// 4. googleLogin done
-// 5. logout      done
-
-// Sign-up
 export const registerUser = createAsyncThunk(
   'user/registerUser',
   async ({ name, email, password, navigate }, { rejectWithValue }) => {
@@ -27,7 +19,6 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-// Login with Email
 export const loginWithEmail = createAsyncThunk(
   'user/loginWithEmail',
   async ({ email, password }, { rejectWithValue }) => {
@@ -41,7 +32,6 @@ export const loginWithEmail = createAsyncThunk(
   }
 );
 
-// login with token
 export const loginWithToken = createAsyncThunk(
   'user/loginWithToken',
   async (_, { rejectWithValue }) => {
@@ -87,10 +77,41 @@ export const logout = createAsyncThunk(
 
 export const forgotPassword = createAsyncThunk(
   'auth/forgotPassword',
-  async ({ email }, { dispatch, rejectWithValue }) => {}
+  async ({ email }, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/auth/forgotPassword', { email });
+      window.alert('We will send a link via email!');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          error.message ||
+          'Failed, sorry try it again.'
+      );
+    }
+  }
 );
 
-export const resetPassword = createAsyncThunk('auth/resetPassword');
+export const resetPassword = createAsyncThunk(
+  'auth/resetPassword',
+  async ({ id, token, password }, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/auth/resetPassword', {
+        id,
+        token,
+        password,
+      });
+      window.alert('Please log in with your new password.');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          error.message ||
+          'Failed to reset your password.'
+      );
+    }
+  }
+);
 
 const userSlice = createSlice({
   name: 'user',
@@ -113,10 +134,10 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true; // 회원가입 성공 여부만 업데이트
+        state.success = true;
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.loading = false; // 로딩 상태 초기화
+        state.loading = false;
         state.error = action.payload;
       })
       .addCase(loginWithEmail.pending, (state) => {
@@ -125,7 +146,7 @@ const userSlice = createSlice({
       .addCase(loginWithEmail.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
-        state.loginError = null;
+        state.error = null;
       })
       .addCase(loginWithEmail.rejected, (state, action) => {
         state.loading = false;
@@ -155,6 +176,28 @@ const userSlice = createSlice({
         state.user = null;
       })
       .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(forgotPassword.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(resetPassword.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

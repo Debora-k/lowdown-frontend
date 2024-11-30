@@ -31,7 +31,6 @@ function ArticleComment({ articleId, commentRef }) {
     (store) => store.comments
   );
 
-  // event handler method
   const eventObj = {
     handleLike: (commentId) => {
       if (!user) {
@@ -106,7 +105,6 @@ function CommentUser({ articleId, user, isFromFavorite, eventObj }) {
     (state) => state.comments.suggestedComment
   );
 
-  // textarea 사이즈 계산
   function handleInput() {
     const textarea = textRef.current;
     if (textarea) {
@@ -114,12 +112,10 @@ function CommentUser({ articleId, user, isFromFavorite, eventObj }) {
       textarea.style.height = `${textarea.scrollHeight + 1}px`;
       setHasComment(textarea.value !== '');
 
-      // 유저가 코멘트에 아무것도 안적을 때 ai에서 보낸 추천 댓글 비우기
       if (textarea.value === '') dispatch(clearComment());
     }
   }
 
-  // 서버에 작성한 댓글 올리기
   function handleSubmit(e) {
     e.preventDefault();
     const { value } = textRef.current;
@@ -136,7 +132,6 @@ function CommentUser({ articleId, user, isFromFavorite, eventObj }) {
     textarea.style.height = 'auto';
     textarea.style.height = `${textarea.scrollHeight + 1}px`;
 
-    //유저가 코멘트 캔슬을 누르면 ai 아이콘도 사라져야함
     dispatch(clearComment());
     setHasComment(false);
     setHasUsedSuggestion(false);
@@ -152,7 +147,6 @@ function CommentUser({ articleId, user, isFromFavorite, eventObj }) {
       setHasUsedSuggestion(true);
       const textarea = textRef.current;
 
-      // 유저가 suggestedComment 를 클릭하면 그대로 코멘트에 복붙
       if (textarea) {
         textarea.value = suggestedComment;
         textarea.style.height = 'auto';
@@ -244,7 +238,6 @@ function CommentCard({ comment, user, eventObj }) {
   const [readMore, setReadMore] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  // 댓글 줄 횟수 계산
   useEffect(() => {
     if (textRef.current) {
       const lineCount = textRef.current.value.split('\n').length;
@@ -254,7 +247,6 @@ function CommentCard({ comment, user, eventObj }) {
     }
   }, [textRef.current]);
 
-  // edit 눌렀을시에 textarea 초기 높이 수정하기
   useEffect(() => {
     if (isEditing) {
       handleInput();
@@ -262,7 +254,6 @@ function CommentCard({ comment, user, eventObj }) {
     }
   }, [isEditing]);
 
-  // textarea 사이즈 계산
   function handleInput() {
     const textarea = editRef.current;
     if (textarea) {
@@ -271,7 +262,6 @@ function CommentCard({ comment, user, eventObj }) {
     }
   }
 
-  // 댓글 수정하기
   function handleEditSubmit(e) {
     e.preventDefault();
     if (!editRef.current.value) {
