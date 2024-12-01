@@ -11,6 +11,7 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import ArticleModal from '../components/article/ArticleModal';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
+import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 
 const AppRouter = () => {
   return (
@@ -24,6 +25,7 @@ const AppRouter = () => {
           <Route path="/myfavorite" element={<FavoritePage />} />
         </Route>
         <Route path="/category" element={<CategoryPage />} />
+        <Route path="/resetPassword" element={<ResetPasswordPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <ArticleModal />

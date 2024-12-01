@@ -1,9 +1,13 @@
-import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import './resetpassword.style.css';
+import { resetPassword } from '../../features/user/userSlice';
+import { useDispatch } from 'react-redux';
 
 const ResetPasswordPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [query] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState({
     token: query.get('token') || '',
@@ -14,16 +18,16 @@ const ResetPasswordPage = () => {
     e.preventDefault();
 
     const [password, confirmPassword] = e.target;
-    const obj = {
-      password: password.value,
-      confirm: confirmPassword.value,
-    };
 
-    const valid = checkFormValid(obj);
-    if (!valid) return;
+    if (password.value === confirmPassword.value) {
+      dispatch(resetPassword({ ...searchQuery, password: password.value }));
+      navigate('/login');
+    }
   };
 
-  const handleReset = () => {};
+  const handleReset = () => {
+    navigate('/login');
+  };
 
   return (
     <div className="reset-password">
@@ -46,13 +50,13 @@ const ResetPasswordPage = () => {
             <input
               type="password"
               placeholder="Enter your confirm new password"
-              name="password"
+              name="confirmPassword"
               required
               autoComplete="off"
             />
           </label>
           <button className="reset-password__button" onClick={handleSubmit}>
-            {isSubmitting ? 'Signing up ...' : 'Register'}
+            Save
           </button>
           <button type="cancel__button" onClick={handleReset}>
             Cancel

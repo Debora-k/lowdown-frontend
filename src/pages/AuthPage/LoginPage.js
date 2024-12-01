@@ -36,6 +36,7 @@ const LoginPage = () => {
     const [email] = e.target;
 
     dispatch(forgotPassword({ email: email.value }));
+    setModalOn(false);
   }
 
   const handleGoogleLogin = async (googleData) => {
@@ -133,14 +134,7 @@ const LoginPage = () => {
               />
             </label>
             <div className="modal__btn-box">
-              <button
-                className="modal__btn modal__btn--warn"
-                onClick={() => {
-                  setModalOn(false);
-                }}
-              >
-                Send
-              </button>
+              <button className="modal__btn modal__btn--warn">Send</button>
               <button onClick={() => setModalOn(false)}>Cancel</button>
             </div>
           </form>
