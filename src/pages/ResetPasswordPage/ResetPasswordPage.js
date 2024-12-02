@@ -16,7 +16,7 @@ const ResetPasswordPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(e.target);
     const [password, confirmPassword] = e.target;
 
     if (password.value === confirmPassword.value) {
@@ -55,10 +55,12 @@ const ResetPasswordPage = () => {
               autoComplete="off"
             />
           </label>
-          <button className="reset-password__button" onClick={handleSubmit}>
-            Save
-          </button>
-          <button type="cancel__button" onClick={handleReset}>
+          <button className="reset-password__button">Save</button>
+          <button
+            className="cancel__button"
+            type="button"
+            onClick={handleReset}
+          >
             Cancel
           </button>
         </form>
