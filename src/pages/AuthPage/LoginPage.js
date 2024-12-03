@@ -119,23 +119,35 @@ const LoginPage = () => {
       {modalOn && (
         <Modal setModalOn={setModalOn}>
           <form className="forgotpassword__form" onSubmit={sendLink}>
-            <div className="modal__title">
-              Enter your <span>email address</span> that you signed up with
-            </div>
-            <div>We will send a link to reset your password shortly</div>
-            <div>If you are having any trouble, please contact us!</div>
-            <label>
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                required
-                autoComplete="off"
-              />
-            </label>
-            <div className="modal__btn-box">
-              <button className="modal__btn modal__btn--warn">Send</button>
-              <button onClick={() => setModalOn(false)}>Cancel</button>
+            <div className="modal__content">
+              {/* <div className="login__content"> */}
+              <div className="modal__title">
+                Enter your <span>email address</span> that you signed up with
+              </div>
+              <div>We will send a link to reset your password shortly</div>
+              <div>If you are having any trouble, please contact us!</div>
+              <div className="=login__form">
+                <label className="reset-password__email">
+                  <span>Your Email :</span>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                    autoComplete="off"
+                  />
+                </label>
+              </div>
+              {/* </div> */}
+              <div className="modal__btn-box">
+                <button className="modal__btn modal__btn--warn">Send</button>
+                <button
+                  className="modal__btn"
+                  onClick={() => setModalOn(false)}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </form>
         </Modal>

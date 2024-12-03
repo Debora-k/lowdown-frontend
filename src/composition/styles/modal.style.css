@@ -48,7 +48,7 @@
   color: var(--clr-font-drk);
 }
 .modal__btn-box {
-  display: flex;
+  display: middle;
   gap: 1em;
 }
 .modal__btn {
