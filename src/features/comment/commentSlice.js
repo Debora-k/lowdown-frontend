@@ -92,6 +92,7 @@ const commentSlice = createSlice({
     selectedArticle: null,
     loading: false,
     error: null,
+    totalPageNum: 1,
     success: false,
     suggestedComment: '',
   },
@@ -112,6 +113,7 @@ const commentSlice = createSlice({
         state.loading = false;
         state.error = '';
         state.commentList = action.payload.commentList.reverse();
+        state.totalPageNum = action.payload.totalPageNum;
       })
       .addCase(getComments.rejected, (state, action) => {
         state.loading = false;
