@@ -17,7 +17,7 @@ import HeartIcon from '../../assets/icons/HeartIcon';
 
 const body = document.getElementsByTagName('body')[0];
 
-function ArticleDetail({ article, isFavorite }) {
+function ArticleDetail({ article, isFavorite, page, articleId }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const commentRef = useRef();
@@ -25,7 +25,7 @@ function ArticleDetail({ article, isFavorite }) {
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    dispatch(getComments(article._id));
+    dispatch(getComments({ page: 1, articleId: articleId }));
   }, []);
 
   useEffect(() => {
@@ -94,7 +94,11 @@ function ArticleDetail({ article, isFavorite }) {
             </div>
           </div>
           {commentOn && (
-            <ArticleComment articleId={article._id} commentRef={commentRef} />
+            <ArticleComment
+              articleId={article._id}
+              commentRef={commentRef}
+              page={page}
+            />
           )}
         </div>
         <div className="back-cover" onClick={handleModalClose}></div>

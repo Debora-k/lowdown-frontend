@@ -8,9 +8,11 @@ import {
 
 export const getComments = createAsyncThunk(
   'comments/getComments',
-  async (articleId, { rejectWithValue }) => {
+  async ({ page, articleId }, { rejectWithValue }) => {
     try {
-      const response = await api.get('/comments', { params: { articleId } });
+      const response = await api.get('/comments', {
+        params: { page: page || 1, articleId },
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.error);
