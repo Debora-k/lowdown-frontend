@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './styles/articleComment.style.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { dateFormatter } from '../../utils/dateFormatter';
 import {
   createComment,
   deleteComment,
@@ -9,16 +8,13 @@ import {
   updateComment,
   clearComment,
   getComments,
+  clearPage,
 } from '../../features/comment/commentSlice';
-import LikeIcon from '../../assets/icons/LikeIcon';
-import EditIcon from '../../assets/icons/EditIcon';
-import DeleteIcon from '../../assets/icons/DeleteIcon';
-import Modal from '../../composition/Modal';
 import RobotIcon from '../../assets/icons/RobotIcon';
 import { useLocation } from 'react-router-dom';
 import { setSelectedArticle } from '../../features/article/articleSlice';
 import LoadingComment from '../common/LoadingComment';
-import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+import LoadingSpinner from '../common/LoadingSpinner';
 import CommentCard from './CommentCard';
 
 function ArticleComment({ articleId, commentRef, page }) {
@@ -69,8 +65,6 @@ function ArticleComment({ articleId, commentRef, page }) {
 
   return (
     <div className="comment" ref={commentRef}>
-      {loading && <LoadingComment />}
-
       <span style={{ color: 'red' }}>{loginError}</span>
       {/* user write comment */}
       {user && (
@@ -100,6 +94,7 @@ function ArticleComment({ articleId, commentRef, page }) {
               />
             );
           })}
+        {loading && totalPageNum >= page && <LoadingSpinner />}
       </div>
     </div>
   );
@@ -135,6 +130,7 @@ function CommentUser({ articleId, user, isFromFavorite, eventObj }) {
     const payload = { articleId, contents: value, isFromFavorite };
     eventObj.handleAdd({ payload });
     handleReset();
+    dispatch(clearPage());
   }
 
   function handleReset() {

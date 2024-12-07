@@ -94,6 +94,7 @@ const commentSlice = createSlice({
     selectedArticle: null,
     loading: false,
     error: null,
+    page: 0,
     totalPageNum: 1,
     success: false,
     suggestedComment: '',
@@ -105,6 +106,10 @@ const commentSlice = createSlice({
     clearComment: (state) => {
       state.suggestedComment = '';
     },
+    clearPage: (state) => {
+      state.page = 0;
+      state.commentList = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -114,8 +119,12 @@ const commentSlice = createSlice({
       .addCase(getComments.fulfilled, (state, action) => {
         state.loading = false;
         state.error = '';
-        state.commentList = action.payload.commentList;
+        state.commentList = [
+          ...state.commentList,
+          ...action.payload.commentList,
+        ];
         state.totalPageNum = action.payload.totalPageNum;
+        state.page = state.page + 1;
       })
       .addCase(getComments.rejected, (state, action) => {
         state.loading = false;
@@ -137,4 +146,4 @@ const commentSlice = createSlice({
 });
 
 export default commentSlice.reducer;
-export const { clearComment } = commentSlice.actions;
+export const { clearComment, clearPage } = commentSlice.actions;

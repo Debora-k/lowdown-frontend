@@ -5,7 +5,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setClearSelectedArticle } from '../../features/article/articleSlice';
 import ArticleComment from './ArticleComment';
-import { getComments } from '../../features/comment/commentSlice';
+import {
+  clearComment,
+  getComments,
+  clearPage,
+} from '../../features/comment/commentSlice';
 import ExitIcon from '../../assets/icons/ExitIcon';
 import ViewIcon from '../../assets/icons/ViewIcon';
 import CommentIcon from '../../assets/icons/CommentIcon';
@@ -17,15 +21,20 @@ import HeartIcon from '../../assets/icons/HeartIcon';
 
 const body = document.getElementsByTagName('body')[0];
 
-function ArticleDetail({ article, isFavorite, page }) {
+function ArticleDetail({ article, isFavorite }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const commentRef = useRef();
   const [commentOn, setCommentOn] = useState(false);
   const user = useSelector((state) => state.user.user);
+  const { page } = useSelector((state) => state.comments);
 
   useEffect(() => {
     dispatch(getComments({ page: 1, articleId: article._id }));
+    return () => {
+      window.scrollTo(0, 0);
+      dispatch(clearPage());
+    };
   }, []);
 
   useEffect(() => {

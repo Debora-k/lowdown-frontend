@@ -9,7 +9,6 @@ import {
   getArticlesByCategory,
 } from '../../features/article/articleSlice';
 import { getFavoriteArticles } from '../../features/favorite/favoriteSlice';
-import LoadingSpinner from '../../components/common/LoadingSpinner';
 
 function HomePage() {
   const dispatch = useDispatch();

@@ -37,6 +37,7 @@ function CommentCard({
   }, [textRef.current]);
 
   useEffect(() => {
+    console.log(isLast, isVisible, totalPageNum, page);
     if (isLast && isVisible && totalPageNum >= page) {
       dispatch(getComments({ page: page + 1, articleId }));
     }
