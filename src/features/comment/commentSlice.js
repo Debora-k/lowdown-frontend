@@ -28,7 +28,7 @@ export const createComment = createAsyncThunk(
   ) => {
     try {
       const response = await api.post('/comments', { articleId, contents });
-      await dispatch(getComments(articleId));
+      await dispatch(getComments({ page: 1, articleId }));
       await dispatch(setUpdatedCommentTotal({ articleId, increase: 1 }));
       if (isFromFavorite) dispatch(getFavoriteArticles());
       return response.data;
@@ -114,7 +114,7 @@ const commentSlice = createSlice({
       .addCase(getComments.fulfilled, (state, action) => {
         state.loading = false;
         state.error = '';
-        state.commentList = action.payload.commentList.reverse();
+        state.commentList = action.payload.commentList;
         state.totalPageNum = action.payload.totalPageNum;
       })
       .addCase(getComments.rejected, (state, action) => {

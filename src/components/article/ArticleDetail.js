@@ -17,7 +17,7 @@ import HeartIcon from '../../assets/icons/HeartIcon';
 
 const body = document.getElementsByTagName('body')[0];
 
-function ArticleDetail({ article, isFavorite, page, articleId }) {
+function ArticleDetail({ article, isFavorite, page }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const commentRef = useRef();
@@ -25,7 +25,7 @@ function ArticleDetail({ article, isFavorite, page, articleId }) {
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    dispatch(getComments({ page: 1, articleId: articleId }));
+    dispatch(getComments({ page: 1, articleId: article._id }));
   }, []);
 
   useEffect(() => {
