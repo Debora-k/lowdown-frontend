@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import store from './features/store';
 import './styles/global.css';
 import './styles/variables.css';
+import ScrollButton from '../src/components/common/ScrollButton';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -16,6 +17,7 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <App />
+        <ScrollButton />
       </BrowserRouter>
     </Provider>
   </GoogleOAuthProvider>
