@@ -36,7 +36,12 @@ const Navbar = () => {
       if (event.target.value === '') {
         return navigate('/');
       }
-      dispatch(getArticlesByTitle({ searchTitle: event.target.value }));
+      dispatch(
+        getArticlesByTitle({
+          searchTitle: event.target.value,
+          category: category,
+        })
+      );
       setIsSearchModalOn(false);
       event.target.value = '';
     }
@@ -192,6 +197,7 @@ const Navbar = () => {
                 type="text"
                 placeholder={`Search in ${category} category`}
                 onKeyDown={onCheckEnter}
+                autoFocus={true}
               />
             </div>
           </Modal>

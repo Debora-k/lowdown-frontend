@@ -42,10 +42,10 @@ export const getArticlesByCategory = createAsyncThunk(
 
 export const getArticlesByTitle = createAsyncThunk(
   'articles/getArticlesByTitle',
-  async ({ searchTitle }, { rejectWithValue }) => {
+  async ({ searchTitle, category }, { rejectWithValue }) => {
     try {
       const response = await api.get('/articles', {
-        params: { searchTitle },
+        params: { searchTitle, category },
       });
       return response.data;
     } catch (error) {
