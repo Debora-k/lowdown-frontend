@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginWithToken, logout } from '../../features/user/userSlice';
 import HamburgerIcon from '../../assets/icons/HamburgerIcon';
 import ExitIcon from '../../assets/icons/ExitIcon';
+import SearchIcon from '../../assets/icons/SearchIcon';
 import { categoryList } from '../../utils/categoryList';
 import Modal from '../../composition/Modal';
 
@@ -28,6 +29,7 @@ const Navbar = () => {
   const [isLogoutModalOn, setIsLogoutModalOn] = useState(false);
   const { user } = useSelector((state) => state.user);
   const { selectedArticle } = useSelector((store) => store.article);
+  // const [showSearchBox, setShowSearchBox] = useState(fasle);
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
@@ -88,6 +90,9 @@ const Navbar = () => {
 
       <nav>
         <div className="navbar__content">
+          <div className="navbar__search-btn">
+            <SearchIcon />
+          </div>
           {user ? (
             <>
               <button className="navbar__btn" onClick={handleLogoutConfirm}>

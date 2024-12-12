@@ -43,6 +43,10 @@
   font-weight: bold;
   font-size: 0.9em;
 }
+.navbar__search-btn {
+  padding: 0.4em 0.3em;
+}
+
 .navbar__register {
   padding: 0.75em 1.5em;
   font-weight: bold;
