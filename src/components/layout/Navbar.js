@@ -16,6 +16,7 @@ import ExitIcon from '../../assets/icons/ExitIcon';
 import SearchIcon from '../../assets/icons/SearchIcon';
 import { categoryList } from '../../utils/categoryList';
 import Modal from '../../composition/Modal';
+import SearchModal from '../../composition/SearchModal';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -191,16 +192,16 @@ const Navbar = () => {
           </Modal>
         )}
         {isSearchModalOn && (
-          <Modal setModalOn={setIsSearchModalOn}>
-            <div className="modal__btn-box">
+          <SearchModal setModalOn={setIsSearchModalOn}>
+            <div>
               <input
-                type="text"
+                className="searchModal__input"
                 placeholder={`Search in ${category} category`}
                 onKeyDown={onCheckEnter}
                 autoFocus={true}
               />
             </div>
-          </Modal>
+          </SearchModal>
         )}
       </>
     </header>
