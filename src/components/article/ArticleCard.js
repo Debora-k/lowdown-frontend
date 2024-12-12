@@ -24,12 +24,13 @@ function ArticleCard({
   const [published, setPublished] = useState(null);
   const isVisible = useInfiniteScroll(lastIdxRef, { threshold: 1.0 });
   const user = useSelector((state) => state.user.user);
+  const searching = useSelector((state) => state.article.searching);
 
   useEffect(() => {
-    if (isLast && isVisible && totalPageNum >= page) {
+    if (isLast && isVisible && totalPageNum >= page && !searching) {
       dispatch(getArticlesByCategory({ page: page + 1, category }));
     }
-  }, [isVisible]);
+  }, [searching, isVisible]);
 
   const favoriteList = useSelector((state) => state.favorite.articleList);
   const isFavorite = favoriteList.find((favorite) => favorite._id === item._id);

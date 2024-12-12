@@ -12,6 +12,7 @@ const initialState = {
   loading: false,
   error: null,
   success: false,
+  searching: false,
 };
 
 export const getArticles = createAsyncThunk(
@@ -80,6 +81,7 @@ const articleSlice = createSlice({
       state.totalPageNum = 1;
       state.page = 0;
       state.loading = false;
+      state.searching = false;
       state.error = null;
       state.success = false;
     },
@@ -161,6 +163,7 @@ const articleSlice = createSlice({
       })
       .addCase(getArticlesByTitle.pending, (state, action) => {
         state.loading = true;
+        state.searching = true;
       })
       .addCase(getArticlesByTitle.fulfilled, (state, action) => {
         state.loading = false;

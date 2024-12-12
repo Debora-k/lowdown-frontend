@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './home.style.css';
-import { Link, NavLink, useSearchParams } from 'react-router-dom';
+import { Link, NavLink, useSearchParams, useNavigate } from 'react-router-dom';
 import ArticleGrid from '../../components/article/ArticleGrid';
 import { useDispatch, useSelector } from 'react-redux';
 import { categoryList } from '../../utils/categoryList';
@@ -12,6 +12,7 @@ import { getFavoriteArticles } from '../../features/favorite/favoriteSlice';
 
 function HomePage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [query] = useSearchParams();
   let category = query.get('category') || 'business';
@@ -22,6 +23,10 @@ function HomePage() {
   }, []);
 
   useEffect(() => {
+    if (query.get('category') === null) {
+      navigate('?category=business');
+      return;
+    }
     dispatch(getArticlesByCategory({ page: 1, category }));
 
     return () => {
