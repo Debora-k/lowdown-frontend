@@ -10,6 +10,7 @@ import {
 import './navbar.style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginWithToken, logout } from '../../features/user/userSlice';
+import { getArticlesByTitle } from '../../features/article/articleSlice';
 import HamburgerIcon from '../../assets/icons/HamburgerIcon';
 import ExitIcon from '../../assets/icons/ExitIcon';
 import SearchIcon from '../../assets/icons/SearchIcon';
@@ -29,7 +30,17 @@ const Navbar = () => {
   const [isLogoutModalOn, setIsLogoutModalOn] = useState(false);
   const { user } = useSelector((state) => state.user);
   const { selectedArticle } = useSelector((store) => store.article);
-  // const [showSearchBox, setShowSearchBox] = useState(fasle);
+  const [isSearchModalOn, setIsSearchModalOn] = useState(false);
+  const onCheckEnter = (event) => {
+    if (event.key === 'Enter') {
+      if (event.target.value === '') {
+        return navigate('/');
+      }
+      dispatch(getArticlesByTitle({ searchTitle: event.target.value }));
+      setIsSearchModalOn(false);
+      event.target.value = '';
+    }
+  };
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
@@ -73,6 +84,10 @@ const Navbar = () => {
     navigate('/login');
   }
 
+  function handleSearch() {
+    setIsSearchModalOn((prev) => !prev);
+  }
+
   return (
     <header className="navbar">
       <div className="navbar__menu" onClick={getMenuTrigger}>
@@ -91,7 +106,9 @@ const Navbar = () => {
       <nav>
         <div className="navbar__content">
           <div className="navbar__search-btn">
-            <SearchIcon />
+            <button onClick={handleSearch}>
+              <SearchIcon />
+            </button>
           </div>
           {user ? (
             <>
@@ -165,6 +182,17 @@ const Navbar = () => {
               <button className="modal__btn" onClick={handleLogoutConfirm}>
                 Cancel
               </button>
+            </div>
+          </Modal>
+        )}
+        {isSearchModalOn && (
+          <Modal setModalOn={setIsSearchModalOn}>
+            <div className="modal__btn-box">
+              <input
+                type="text"
+                placeholder={`Search in ${category} category`}
+                onKeyDown={onCheckEnter}
+              />
             </div>
           </Modal>
         )}

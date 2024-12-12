@@ -40,6 +40,20 @@ export const getArticlesByCategory = createAsyncThunk(
   }
 );
 
+export const getArticlesByTitle = createAsyncThunk(
+  'articles/getArticlesByTitle',
+  async ({ searchTitle }, { rejectWithValue }) => {
+    try {
+      const response = await api.get('/articles', {
+        params: { searchTitle },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
+
 export const updateArticleViews = createAsyncThunk(
   'articles/updateArticleViews',
   async (articleId, { dispatch, rejectWithValue }) => {
@@ -142,6 +156,17 @@ const articleSlice = createSlice({
         state.error = null;
       })
       .addCase(updateArticleViews.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getArticlesByTitle.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getArticlesByTitle.fulfilled, (state, action) => {
+        state.loading = false;
+        state.articleList = action.payload.articles;
+      })
+      .addCase(getArticlesByTitle.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
