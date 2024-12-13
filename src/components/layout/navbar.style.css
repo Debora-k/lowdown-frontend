@@ -30,6 +30,7 @@
 .navbar__content {
   display: flex;
   gap: 0.5em;
+  align-items: center;
 }
 .navbar__favorite {
   padding: 0.75em 1.5em;
@@ -44,7 +45,8 @@
   font-size: 0.9em;
 }
 .navbar__search-btn {
-  padding: 0.4em 0.3em;
+  padding: 0.2em 0.1em;
+  color:black;
 }
 
 .navbar__register {
@@ -148,6 +150,6 @@
   }
   .navbar__content button,
   .navbar__content a {
-    padding: 0.5em 1em !important;
+    padding: 0.5em 0.5em !important;
   }
 }/*# sourceMappingURL=navbar.style.css.map */
