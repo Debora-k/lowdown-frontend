@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BACKEND_URL = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const BACKEND_URL = `${process.env.REACT_APP_BACKEND_PROXY}/api`;
 const JWT = sessionStorage.getItem('token');
 
 const api = axios.create({

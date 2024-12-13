@@ -72,7 +72,7 @@ function CommentCard({
     setIsEditing(false);
     setReadMore(true);
   }
-
+  console.log(comment.userId.picture);
   return (
     <section className="comment__list-card" key={comment._id} ref={commentRef}>
       <div className="image-container">
