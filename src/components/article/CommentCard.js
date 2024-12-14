@@ -60,6 +60,7 @@ function CommentCard({
 
   function handleEditSubmit(e) {
     e.preventDefault();
+    e.returnValue = '';
     if (!editRef.current.value) {
       setIsEditing(false);
       setReadMore(true);
@@ -72,7 +73,7 @@ function CommentCard({
     setIsEditing(false);
     setReadMore(true);
   }
-  console.log(comment.userId.picture);
+
   return (
     <section className="comment__list-card" key={comment._id} ref={commentRef}>
       <div className="image-container">
@@ -141,7 +142,6 @@ function CommentCard({
 function CommentOption({ comment, user, eventObj, setIsEditing }) {
   const [modalOn, setModalOn] = useState(false);
   let hasLike = comment.likes.find((item) => item.userId === user?._id);
-
   return (
     <>
       <div className="comment__option">

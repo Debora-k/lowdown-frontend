@@ -101,8 +101,10 @@ const articleSlice = createSlice({
 
       state.articleList[idx] = {
         ...state.articleList[idx],
-        totalCommentCount:
+        totalCommentCount: Math.max(
           state.articleList[idx].totalCommentCount + action.payload.increase,
+          0
+        ),
       };
       state.selectedArticle = state.articleList[idx];
     },

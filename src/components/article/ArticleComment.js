@@ -117,7 +117,11 @@ function CommentUser({ articleId, user, isFromFavorite, eventObj }) {
       textarea.style.height = `${textarea.scrollHeight + 1}px`;
       setHasComment(textarea.value !== '');
 
-      if (textarea.value === '') dispatch(clearComment());
+      if (textarea.value === '') {
+        dispatch(clearComment());
+        setHasComment(false);
+        setHasUsedSuggestion(false);
+      }
     }
   }
 

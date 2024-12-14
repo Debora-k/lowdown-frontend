@@ -58,16 +58,12 @@ export const deleteComment = createAsyncThunk(
 
 export const updateComment = createAsyncThunk(
   'comments/updateComment',
-  async (
-    { articleId, commentId, contents, likeRequest },
-    { dispatch, rejectWithValue }
-  ) => {
+  async ({ commentId, contents, likeRequest }, { rejectWithValue }) => {
     try {
       const response = await api.put(`/comments/${commentId}`, {
         contents,
         likeRequest,
       });
-      dispatch(getComments(articleId));
       return response.data;
     } catch (error) {
       return rejectWithValue(error.error);
@@ -139,6 +135,45 @@ const commentSlice = createSlice({
         state.suggestedComment = action.payload.suggestedComment.content;
       })
       .addCase(suggestComment.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateComment.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(updateComment.fulfilled, (state, action) => {
+        state.loading = false;
+        state.commentList = state.commentList.map((comment) => {
+          if (comment._id === action.payload.findComment._id) {
+            return {
+              ...comment,
+              contents: action.payload.findComment.contents,
+              likes: action.payload.findComment.likes,
+            };
+          }
+          return comment;
+        });
+        state.error = null;
+      })
+      .addCase(updateComment.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteComment.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(deleteComment.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.commentList.splice(
+          state.commentList.findIndex(
+            (comment) => comment._id === action.payload
+          ),
+          1
+        );
+      })
+      .addCase(deleteComment.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
